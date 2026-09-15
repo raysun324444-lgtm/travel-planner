@@ -1,10 +1,15 @@
-// Country Config Matrix: Region and Local Daily Cost Tier (1 = Low, 3 = High)
+// Complete Country Matrix with your new destinations
+// costTier: 1 = Budget-friendly, 3 = Expensive
 const countryData = {
-    "US": { region: "NA", costTier: 3 },
-    "UK": { region: "EU", costTier: 3 },
-    "FR": { region: "EU", costTier: 3 },
-    "JP": { region: "AS", costTier: 2.5 },
-    "TH": { region: "AS", costTier: 1 }
+    "US": { region: "NA", costTier: 3 },    // United States
+    "UK": { region: "EU", costTier: 3 },    // United Kingdom
+    "FR": { region: "EU", costTier: 3 },    // France
+    "JP": { region: "AS", costTier: 2.5 },  // Japan
+    "TH": { region: "AS", costTier: 1 },    // Thailand
+    "KH": { region: "AS", costTier: 1 },    // Cambodia
+    "AE": { region: "ME", costTier: 3 },    // United Arab Emirates
+    "MX": { region: "NA", costTier: 1.5 },  // Mexico
+    "PT": { region: "EU", costTier: 2 }     // Portugal
 };
 
 // Global counts
@@ -28,42 +33,42 @@ function calculateBudget() {
     const timeDiff = returnDate.getTime() - departDate.getTime();
     const days = Math.max(1, Math.ceil(timeDiff / (1000 * 3600 * 24)));
 
-    // 2. Determine Flight/Transit Baseline Base on Regions
-    const origData = countryData[origin];
-    const destData = countryData[destination];
+    // 2. Safely Get Country Data (With global safety fallback if key is missing)
+    const origData = countryData[origin] || { region: "UNKNOWN", costTier: 2 };
+    const destData = countryData[destination] || { region: "UNKNOWN", costTier: 2 };
     
-    let flightBaseCost = 200; // Domestic/Intra-region default
+    // 3. Determine Flight/Transit Cost Based on Regions
+    let flightBaseCost = 200; // Default for internal/close travel
     if (origData.region !== destData.region) {
-        flightBaseCost = 900; // Intercontinental long-haul
+        flightBaseCost = 950; // Long-haul cross-region travel
     }
 
-    // 3. Determine Local Living Cost Baseline per Day
-    const destinationTier = destData.costTier;
-    const baseDailyRate = 40 * destinationTier; 
+    // 4. Determine Local Living Cost Baseline per Day
+    const baseDailyRate = 45 * destData.costTier; 
 
-    // 4. Passenger Multipliers
+    // 5. Passenger Multipliers
     const totalPeopleMultiplier = counts.adults + (counts.children * 0.6);
 
-    // 5. Purpose Premium
-    const businessMultiplier = (purpose === 'business') ? 1.4 : 1.0;
+    // 6. Purpose Premium (Business travel scale factor)
+    const businessMultiplier = (purpose === 'business') ? 1.45 : 1.0;
 
-    // 6. Generate Tier Tiers
+    // 7. Generate Tiers
     // Economy Tier
-    const lowFlight = flightBaseCost * 0.7;
-    const lowDaily = baseDailyRate * 0.6;
+    const lowFlight = flightBaseCost * 0.75;
+    const lowDaily = baseDailyRate * 0.65;
     const lowTotal = (lowFlight * totalPeopleMultiplier) + (lowDaily * days * totalPeopleMultiplier);
 
     // Comfort Tier
     const midFlight = flightBaseCost * 1.0;
-    const midDaily = baseDailyRate * 1.2;
+    const midDaily = baseDailyRate * 1.25;
     const midTotal = ((midFlight * totalPeopleMultiplier) + (midDaily * days * totalPeopleMultiplier)) * businessMultiplier;
 
     // Exclusive Tier
-    const highFlight = flightBaseCost * 2.5;
-    const highDaily = baseDailyRate * 3.5;
-    const highTotal = ((highFlight * totalPeopleMultiplier) + (highDaily * days * totalPeopleMultiplier)) * businessMultiplier * 1.3;
+    const highFlight = flightBaseCost * 2.6;
+    const highDaily = baseDailyRate * 3.8;
+    const highTotal = ((highFlight * totalPeopleMultiplier) + (highDaily * days * totalPeopleMultiplier)) * businessMultiplier * 1.35;
 
-    // 7. Render UI updates
+    // 8. Render UI updates safely
     document.getElementById('budget-low').innerText = `$${Math.round(lowTotal).toLocaleString()}`;
     document.getElementById('budget-mid').innerText = `$${Math.round(midTotal).toLocaleString()}`;
     document.getElementById('budget-exclusive').innerText = `$${Math.round(highTotal).toLocaleString()}`;
