@@ -171,3 +171,37 @@ select, input[type="date"] {
         margin-bottom: 16px;
     }
 }
+.affiliate-links {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.affiliate-btn {
+    display: block;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.flight-btn {
+    background-color: #e3f2fd;
+    color: #0d47a1;
+}
+
+.flight-btn:hover {
+    background-color: #bbdefb;
+}
+
+.hotel-btn {
+    background-color: #e8f5e9;
+    color: #1b5e20;
+}
+
+.hotel-btn:hover {
+    background-color: #c8e6c9;
+}
