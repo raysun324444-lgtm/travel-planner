@@ -3,25 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoyageBudget - macOS Big Sur Edition</title>
+    <title>Nomad - Travel Budget Planner</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <main class="app-container app-window">
-        <!-- macOS Control Traffic Light Window Header -->
+        <!-- macOS Style Header with Right-Aligned Traffic Lights -->
         <header class="window-header">
-            <div class="traffic-lights">
-                <span class="light close"></span>
-                <span class="light minimize"></span>
-                <span class="light maximize"></span>
-            </div>
-            <h1 class="window-title">VoyageBudget</h1>
-            <div class="progress-bar">
-                <span class="step-indicator active" id="dot-1" onclick="goToStep(1)">1</span>
-                <span class="step-line"></span>
-                <span class="step-indicator" id="dot-2" onclick="goToStep(2)">2</span>
-                <span class="step-line"></span>
-                <span class="step-indicator" id="dot-3">3</span>
+            <h1 class="window-title">Nomad</h1>
+            
+            <div class="header-right-group">
+                <!-- Navigation Flow Timeline Links -->
+                <div class="progress-bar">
+                    <span class="step-indicator active" id="dot-1" onclick="goToStep(1)">1</span>
+                    <span class="step-line"></span>
+                    <span class="step-indicator" id="dot-2" onclick="goToStep(2)">2</span>
+                    <span class="step-line"></span>
+                    <span class="step-indicator" id="dot-3">3</span>
+                </div>
+                
+                <!-- Traffic Lights Migrated to Right Side with Behind-Number Indicators -->
+                <div class="traffic-lights">
+                    <span class="light close" data-number="1"></span>
+                    <span class="light minimize" data-number="2"></span>
+                    <span class="light maximize" data-number="3"></span>
+                </div>
             </div>
         </header>
 
@@ -30,7 +36,7 @@
             <section class="wizard-step active" id="step-1">
                 <h2>Where & When?</h2>
                 <div class="input-row">
-                    <div class="input-col mac-card clickable-option">
+                    <div class="input-col mac-card clickable-option dropdown-wrapper">
                         <label for="origin">From <span id="flag-origin">🇺🇸</span></label>
                         <select id="origin">
                             <option value="US" selected>United States</option>
@@ -44,7 +50,7 @@
                             <option value="FR">France</option>
                         </select>
                     </div>
-                    <div class="input-col mac-card clickable-option">
+                    <div class="input-col mac-card clickable-option dropdown-wrapper">
                         <label for="destination">To <span id="flag-destination">🇹🇭</span></label>
                         <select id="destination">
                             <option value="TH" selected>Thailand</option>
@@ -76,7 +82,7 @@
                 </div>
             </section>
 
-            <!-- STEP 2: TRAVELERS & ACTIVITY DEPENDENT PREVIEWS -->
+            <!-- STEP 2: TRAVELERS & DYNAMIC EXPERIENCES -->
             <section class="wizard-step" id="step-2">
                 <h2>Who & How?</h2>
                 
@@ -115,7 +121,7 @@
                     </div>
                 </div>
 
-                <!-- Dynamic Big Sur Experience Info Cards -->
+                <!-- Step 2 Cards Inherit the Same Precise Hover & Structure Dynamics -->
                 <div class="tier-previews">
                     <div class="preview-item mac-card clickable-option" id="preview-low">
                         <h4>Economy</h4>
@@ -137,7 +143,7 @@
                 </div>
             </section>
 
-            <!-- STEP 3: RESULTS MATRIX -->
+            <!-- STEP 3: RESULTS DISPLAY MATRIX -->
             <section class="wizard-step" id="step-3">
                 <h2>Your Generated Estimates</h2>
                 <div class="results-section">
