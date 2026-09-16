@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimalist Travel Budget Planner</title>
+    <title>VoyageBudget - Travel Planner</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <main class="app-container">
         <header class="app-header">
-            <h1>Travel PLan Budget</h1>
-            <p>Select your parameters to instantly simulate three tiers of travel pricing.</p>
+            <h1>VoyageBudget</h1>
+            <div class="progress-bar">
+                <span class="step-indicator active" id="dot-1">1</span>
+                <span class="step-line"></span>
+                <span class="step-indicator" id="dot-2">2</span>
+                <span class="step-line"></span>
+                <span class="step-indicator" id="dot-3">3</span>
+            </div>
         </header>
 
-        <section class="form-section">
-            <!-- Route -->
+        <!-- STEP 1: DESTINATION & DATES -->
+        <section class="glass-panel wizard-step active" id="step-1">
+            <h2>Where & When?</h2>
             <div class="input-group row">
                 <div class="col">
-                    <label for="origin">From</label>
+                    <label for="origin">From <span id="flag-origin">🇺🇸</span></label>
                     <select id="origin">
-                        <option value="US">United States</option>
+                        <option value="US" selected>United States</option>
                         <option value="UK">United Kingdom</option>
                         <option value="AE">United Arab Emirates</option>
                         <option value="MX">Mexico</option>
@@ -31,7 +38,7 @@
                     </select>
                 </div>
                 <div class="col">
-                    <label for="destination">To</label>
+                    <label for="destination">To <span id="flag-destination">🇹🇭</span></label>
                     <select id="destination">
                         <option value="TH" selected>Thailand</option>
                         <option value="AE">United Arab Emirates</option>
@@ -46,7 +53,6 @@
                 </div>
             </div>
 
-            <!-- Dates -->
             <div class="input-group row">
                 <div class="col">
                     <label for="depart-date">Departure</label>
@@ -58,7 +64,15 @@
                 </div>
             </div>
 
-            <!-- Travelers -->
+            <div class="wizard-footer">
+                <button type="button" class="nav-btn next-btn" onclick="goToStep(2)">Continue to Customization →</button>
+            </div>
+        </section>
+
+        <!-- STEP 2: TRAVELERS & EXPERIENCE PREVIEW -->
+        <section class="glass-panel wizard-step" id="step-2">
+            <h2>Who & How?</h2>
+            
             <div class="input-group row">
                 <div class="col counter-group">
                     <label>Adults</label>
@@ -78,63 +92,80 @@
                 </div>
             </div>
 
-            <!-- Purpose -->
             <div class="input-group">
                 <label>Trip Purpose</label>
                 <div class="radio-toggle">
                     <label class="radio-label">
-                        <input type="radio" name="purpose" value="pleasure" checked onchange="calculateBudget()">
+                        <input type="radio" name="purpose" value="pleasure" checked>
                         <span>Pleasure</span>
                     </label>
                     <label class="radio-label">
-                        <input type="radio" name="purpose" value="business" onchange="calculateBudget()">
+                        <input type="radio" name="purpose" value="business">
                         <span>Business</span>
                     </label>
                 </div>
             </div>
+
+            <!-- Tier Categories Breakdown Previews -->
+            <div class="tier-previews">
+                <div class="preview-item">
+                    <h4>Economy</h4>
+                    <p>🏨 Backpacker Hostels<br>🍲 Local Street Food<br>🚌 Public Buses & Trains</p>
+                </div>
+                <div class="preview-item">
+                    <h4>Effortless</h4>
+                    <p>🏨 3-Star Boutique Hotels<br>☕ Casual Cafes & Dining<br>🚗 Local Rideshares & Taxis</p>
+                </div>
+                <div class="preview-item">
+                    <h4>Exclusive</h4>
+                    <p>🏨 5-Star Luxury Resorts<br>🍾 Exquisite Fine Dining<br>✈️ First Class / Private Chauffeur</p>
+                </div>
+            </div>
+
+            <div class="wizard-footer split">
+                <button type="button" class="nav-btn back-btn" onclick="goToStep(1)">← Back</button>
+                <button type="button" class="nav-btn next-btn" onclick="generateAndShowResults()">Generate Budget Plan →</button>
+            </div>
         </section>
 
-        <!-- Monetized Results Matrix -->
-<section class="results-section">
-    <!-- Economy Card -->
-    <div class="budget-card low">
-        <h3>Economy</h3>
-        <p class="subtitle">Hostels, local street food, public transit</p>
-        <div class="price" id="budget-low">$0</div>
-        
-        <!-- Affiliate Links -->
-        <div class="affiliate-links">
-            <a href="https://pxf.io" target="_blank" class="affiliate-btn flight-btn">Find Cheap Flights</a>
-            <a href="https://tp.st" target="_blank" class="affiliate-btn hotel-btn">Browse Budget Hostels</a>
-        </div>
-    </div>
+        <!-- STEP 3: RESULTS MATRIX -->
+        <section class="wizard-step" id="step-3">
+            <div class="results-section">
+                <div class="budget-card low">
+                    <h3>Economy</h3>
+                    <p class="subtitle">Budget accommodations, basic mapping, authentic local experiences.</p>
+                    <div class="price" id="budget-low">$0</div>
+                    <div class="affiliate-links">
+                        <a href="#" target="_blank" class="affiliate-btn flight-btn">Cheap Flights</a>
+                        <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book Hostels</a>
+                    </div>
+                </div>
+                
+                <div class="budget-card mid active">
+                    <h3>Effortless</h3>
+                    <p class="subtitle">Comfortable intermediate options, balanced standard amenities.</p>
+                    <div class="price" id="budget-mid">$0</div>
+                    <div class="affiliate-links">
+                        <a href="#" target="_blank" class="affiliate-btn flight-btn">Standard Flights</a>
+                        <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book 3-Star</a>
+                    </div>
+                </div>
 
-    <!-- Comfort Card -->
-    <div class="budget-card mid active">
-        <h3>Comfort</h3>
-        <p class="subtitle">3-star hotels, cafes, casual rideshares</p>
-        <div class="price" id="budget-mid">$0</div>
-        
-        <!-- Affiliate Links -->
-        <div class="affiliate-links">
-            <a href="https://tp.st" target="_blank" class="affiliate-btn flight-btn">Book Comfort Flights</a>
-            <a href="https://tp.st" target="_blank" class="affiliate-btn hotel-btn">Find 3-Star Hotels</a>
-        </div>
-    </div>
+                <div class="budget-card exclusive">
+                    <h3>Exclusive</h3>
+                    <p class="subtitle">Premium transit classes, luxury VIP stays, maximum culinary quality.</p>
+                    <div class="price" id="budget-exclusive">$0</div>
+                    <div class="affiliate-links">
+                        <a href="#" target="_blank" class="affiliate-btn flight-btn">Business Class</a>
+                        <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book Luxury</a>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Exclusive Card -->
-    <div class="budget-card exclusive">
-        <h3>Exclusive</h3>
-        <p class="subtitle">Luxury resorts, fine dining, private cars</p>
-        <div class="price" id="budget-exclusive">$0</div>
-        
-        <!-- Affiliate Links -->
-        <div class="affiliate-links">
-            <a href="https://pxf.io" target="_blank" class="affiliate-btn flight-btn">Search Business Class</a>
-            <a href="https://tp.st" target="_blank" class="affiliate-btn hotel-btn">Book Luxury Resorts</a>
-        </div>
-    </div>
-</section>
+            <div class="wizard-footer center">
+                <button type="button" class="nav-btn back-btn" onclick="goToStep(2)">← Edit Details</button>
+            </div>
+        </section>
     </main>
     <script src="app.js"></script>
 </body>
