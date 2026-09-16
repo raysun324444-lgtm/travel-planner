@@ -8,12 +8,32 @@
 </head>
 <body>
     <main class="app-container app-window">
-        <!-- macOS Style Header with Right-Aligned Traffic Lights -->
+        <!-- macOS Style Header Rebranded with your Custom SVG Logo & Right Traffic Lights -->
         <header class="window-header">
-            <h1 class="window-title">Nomad</h1>
+            <div class="header-left-brand">
+                <!-- Injected Custom Nomad Traveler SVG Logo -->
+                <div class="nomad-logo-icon">
+                    <svg viewBox="0 0 512 512">
+                      <rect x="32" y="32" width="448" height="448" rx="100" ry="100" fill="#1e252b" stroke="#333c44" stroke-width="8"/>
+                      <rect x="40" y="40" width="432" height="432" rx="92" ry="92" fill="none" stroke="#12161a" stroke-width="4" opacity="0.5"/>
+                      <g fill="none" stroke="#8ee3d3" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="270" cy="130" r="22" />
+                        <path d="M 235 175 C 190 190, 190 270, 215 300 C 220 305, 235 300, 235 280 Z" />
+                        <path d="M 255 170 C 265 240, 240 280, 290 390 C 300 410, 315 425, 320 430" />
+                        <path d="M 245 285 C 225 330, 210 360, 235 410 C 240 420, 235 425, 225 425" />
+                        <path d="M 260 175 C 290 200, 310 240, 345 250 C 355 252, 360 245, 355 238" />
+                        <path d="M 220 280 L 175 345" stroke-width="12" />
+                        <path d="M 185 270 L 165 300" stroke-width="12" />
+                        <rect x="120" y="310" width="70" height="110" rx="15" ry="15" transform="rotate(25 155 365)" stroke-width="14" />
+                        <circle cx="132" cy="435" r="10" fill="#8ee3d3" stroke="none" />
+                      </g>
+                    </svg>
+                </div>
+                <h1 class="window-title">Nomad</h1>
+            </div>
             
             <div class="header-right-group">
-                <!-- Navigation Flow Timeline Links -->
+                <!-- Navigation Steps -->
                 <div class="progress-bar">
                     <span class="step-indicator active" id="dot-1" onclick="goToStep(1)">1</span>
                     <span class="step-line"></span>
@@ -22,7 +42,7 @@
                     <span class="step-indicator" id="dot-3">3</span>
                 </div>
                 
-                <!-- Traffic Lights Migrated to Right Side with Behind-Number Indicators -->
+                <!-- Traffic Lights Migrated to Right Side with Backing Indicator Numbers (1, 2, 3) -->
                 <div class="traffic-lights">
                     <span class="light close" data-number="1"></span>
                     <span class="light minimize" data-number="2"></span>
@@ -121,7 +141,7 @@
                     </div>
                 </div>
 
-                <!-- Step 2 Cards Inherit the Same Precise Hover & Structure Dynamics -->
+                <!-- Step 2 Cards with Uniform Hover/Scale Behaviors -->
                 <div class="tier-previews">
                     <div class="preview-item mac-card clickable-option" id="preview-low">
                         <h4>Economy</h4>
@@ -157,33 +177,3 @@
                         </div>
                     </div>
                     
-                    <div class="budget-card mac-card clickable-option active">
-                        <h3>Effortless</h3>
-                        <p class="subtitle">Comfortable intermediate options, balanced standard amenities.</p>
-                        <div class="price" id="budget-mid">$0</div>
-                        <div class="affiliate-links">
-                            <a href="#" target="_blank" class="affiliate-btn flight-btn">Standard Flights</a>
-                            <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book 3-Star</a>
-                        </div>
-                    </div>
-
-                    <div class="budget-card mac-card clickable-option">
-                        <h3>Exclusive</h3>
-                        <p class="subtitle">Premium transit classes, luxury VIP stays, maximum culinary quality.</p>
-                        <div class="price" id="budget-exclusive">$0</div>
-                        <div class="affiliate-links">
-                            <a href="#" target="_blank" class="affiliate-btn flight-btn">Business Class</a>
-                            <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book Luxury</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="wizard-footer center">
-                    <button type="button" class="mac-btn secondary-btn" onclick="goToStep(2)">← Edit Details</button>
-                </div>
-            </section>
-        </div>
-    </main>
-    <script src="app.js"></script>
-</body>
-</html>
