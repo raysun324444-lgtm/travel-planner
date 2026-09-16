@@ -3,169 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoyageBudget - Travel Planner</title>
+    <title>VoyageBudget - macOS Big Sur Edition</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main class="app-container">
-        <header class="app-header">
-            <h1>VoyageBudget</h1>
+    <main class="app-container app-window">
+        <!-- macOS Control Traffic Light Window Header -->
+        <header class="window-header">
+            <div class="traffic-lights">
+                <span class="light close"></span>
+                <span class="light minimize"></span>
+                <span class="light maximize"></span>
+            </div>
+            <h1 class="window-title">VoyageBudget</h1>
             <div class="progress-bar">
-                <span class="step-indicator active" id="dot-1">1</span>
+                <span class="step-indicator active" id="dot-1" onclick="goToStep(1)">1</span>
                 <span class="step-line"></span>
-                <span class="step-indicator" id="dot-2">2</span>
+                <span class="step-indicator" id="dot-2" onclick="goToStep(2)">2</span>
                 <span class="step-line"></span>
                 <span class="step-indicator" id="dot-3">3</span>
             </div>
         </header>
 
-        <!-- STEP 1: DESTINATION & DATES -->
-        <section class="glass-panel wizard-step active" id="step-1">
-            <h2>Where & When?</h2>
-            <div class="input-group row">
-                <div class="col">
-                    <label for="origin">From <span id="flag-origin">🇺🇸</span></label>
-                    <select id="origin">
-                        <option value="US" selected>United States</option>
-                        <option value="UK">United Kingdom</option>
-                        <option value="AE">United Arab Emirates</option>
-                        <option value="MX">Mexico</option>
-                        <option value="PT">Portugal</option>
-                        <option value="KH">Cambodia</option>
-                        <option value="TH">Thailand</option>
-                        <option value="JP">Japan</option>
-                        <option value="FR">France</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="destination">To <span id="flag-destination">🇹🇭</span></label>
-                    <select id="destination">
-                        <option value="TH" selected>Thailand</option>
-                        <option value="AE">United Arab Emirates</option>
-                        <option value="MX">Mexico</option>
-                        <option value="PT">Portugal</option>
-                        <option value="KH">Cambodia</option>
-                        <option value="JP">Japan</option>
-                        <option value="FR">France</option>
-                        <option value="US">United States</option>
-                        <option value="UK">United Kingdom</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="input-group row">
-                <div class="col">
-                    <label for="depart-date">Departure</label>
-                    <input type="date" id="depart-date" value="2026-10-01">
-                </div>
-                <div class="col">
-                    <label for="return-date">Return</label>
-                    <input type="date" id="return-date" value="2026-10-10">
-                </div>
-            </div>
-
-            <div class="wizard-footer">
-                <button type="button" class="nav-btn next-btn" onclick="goToStep(2)">Continue to Customization →</button>
-            </div>
-        </section>
-
-        <!-- STEP 2: TRAVELERS & EXPERIENCE PREVIEW -->
-        <section class="glass-panel wizard-step" id="step-2">
-            <h2>Who & How?</h2>
-            
-            <div class="input-group row">
-                <div class="col counter-group">
-                    <label>Adults</label>
-                    <div class="counter">
-                        <button type="button" onclick="changeCount('adults', -1)">-</button>
-                        <span id="adults-count">1</span>
-                        <button type="button" onclick="changeCount('adults', 1)">+</button>
+        <div class="window-content">
+            <!-- STEP 1: DESTINATION & DATES -->
+            <section class="wizard-step active" id="step-1">
+                <h2>Where & When?</h2>
+                <div class="input-row">
+                    <div class="input-col mac-card clickable-option">
+                        <label for="origin">From <span id="flag-origin">🇺🇸</span></label>
+                        <select id="origin">
+                            <option value="US" selected>United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="AE">United Arab Emirates</option>
+                            <option value="MX">Mexico</option>
+                            <option value="PT">Portugal</option>
+                            <option value="KH">Cambodia</option>
+                            <option value="TH">Thailand</option>
+                            <option value="JP">Japan</option>
+                            <option value="FR">France</option>
+                        </select>
+                    </div>
+                    <div class="input-col mac-card clickable-option">
+                        <label for="destination">To <span id="flag-destination">🇹🇭</span></label>
+                        <select id="destination">
+                            <option value="TH" selected>Thailand</option>
+                            <option value="AE">United Arab Emirates</option>
+                            <option value="MX">Mexico</option>
+                            <option value="PT">Portugal</option>
+                            <option value="KH">Cambodia</option>
+                            <option value="JP">Japan</option>
+                            <option value="FR">France</option>
+                            <option value="US">United States</option>
+                            <option value="UK">United Kingdom</option>
+                        </select>
                     </div>
                 </div>
-                <div class="col counter-group">
-                    <label>Children</label>
-                    <div class="counter">
-                        <button type="button" onclick="changeCount('children', -1)">-</button>
-                        <span id="children-count">0</span>
-                        <button type="button" onclick="changeCount('children', 1)">+</button>
+
+                <div class="input-row padding-top">
+                    <div class="input-col mac-card clickable-option macos-calendar-wrapper">
+                        <label for="depart-date">Departure Date</label>
+                        <input type="date" id="depart-date" value="2026-10-01">
+                    </div>
+                    <div class="input-col mac-card clickable-option macos-calendar-wrapper">
+                        <label for="return-date">Return Date</label>
+                        <input type="date" id="return-date" value="2026-10-10">
                     </div>
                 </div>
-            </div>
 
-            <div class="input-group">
-                <label>Trip Purpose</label>
-                <div class="radio-toggle">
-                    <label class="radio-label">
-                        <input type="radio" name="purpose" value="pleasure" checked>
-                        <span>Pleasure</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="purpose" value="business">
-                        <span>Business</span>
-                    </label>
+                <div class="wizard-footer">
+                    <button type="button" class="mac-btn primary-btn" onclick="goToStep(2)">Continue to Customization →</button>
                 </div>
-            </div>
+            </section>
 
-            <!-- Tier Categories Breakdown Previews -->
-            <div class="tier-previews">
-                <div class="preview-item">
-                    <h4>Economy</h4>
-                    <p>🏨 Backpacker Hostels<br>🍲 Local Street Food<br>🚌 Public Buses & Trains</p>
-                </div>
-                <div class="preview-item">
-                    <h4>Effortless</h4>
-                    <p>🏨 3-Star Boutique Hotels<br>☕ Casual Cafes & Dining<br>🚗 Local Rideshares & Taxis</p>
-                </div>
-                <div class="preview-item">
-                    <h4>Exclusive</h4>
-                    <p>🏨 5-Star Luxury Resorts<br>🍾 Exquisite Fine Dining<br>✈️ First Class / Private Chauffeur</p>
-                </div>
-            </div>
-
-            <div class="wizard-footer split">
-                <button type="button" class="nav-btn back-btn" onclick="goToStep(1)">← Back</button>
-                <button type="button" class="nav-btn next-btn" onclick="generateAndShowResults()">Generate Budget Plan →</button>
-            </div>
-        </section>
-
-        <!-- STEP 3: RESULTS MATRIX -->
-        <section class="wizard-step" id="step-3">
-            <div class="results-section">
-                <div class="budget-card low">
-                    <h3>Economy</h3>
-                    <p class="subtitle">Budget accommodations, basic mapping, authentic local experiences.</p>
-                    <div class="price" id="budget-low">$0</div>
-                    <div class="affiliate-links">
-                        <a href="#" target="_blank" class="affiliate-btn flight-btn">Cheap Flights</a>
-                        <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book Hostels</a>
-                    </div>
-                </div>
+            <!-- STEP 2: TRAVELERS & ACTIVITY DEPENDENT PREVIEWS -->
+            <section class="wizard-step" id="step-2">
+                <h2>Who & How?</h2>
                 
-                <div class="budget-card mid active">
-                    <h3>Effortless</h3>
-                    <p class="subtitle">Comfortable intermediate options, balanced standard amenities.</p>
-                    <div class="price" id="budget-mid">$0</div>
-                    <div class="affiliate-links">
-                        <a href="#" target="_blank" class="affiliate-btn flight-btn">Standard Flights</a>
-                        <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book 3-Star</a>
+                <div class="input-row">
+                    <div class="input-col mac-card clickable-option">
+                        <label>Adults</label>
+                        <div class="counter">
+                            <button type="button" onclick="changeCount('adults', -1)">-</button>
+                            <span id="adults-count">1</span>
+                            <button type="button" onclick="changeCount('adults', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="input-col mac-card clickable-option">
+                        <label>Children</label>
+                        <div class="counter">
+                            <button type="button" onclick="changeCount('children', -1)">-</button>
+                            <span id="children-count">0</span>
+                            <button type="button" onclick="changeCount('children', 1)">+</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="budget-card exclusive">
-                    <h3>Exclusive</h3>
-                    <p class="subtitle">Premium transit classes, luxury VIP stays, maximum culinary quality.</p>
-                    <div class="price" id="budget-exclusive">$0</div>
-                    <div class="affiliate-links">
-                        <a href="#" target="_blank" class="affiliate-btn flight-btn">Business Class</a>
-                        <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book Luxury</a>
+                <div class="input-row padding-top">
+                    <div class="input-col mac-card clickable-option full-width">
+                        <label>Trip Purpose</label>
+                        <div class="radio-toggle">
+                            <label class="radio-label">
+                                <input type="radio" name="purpose" value="pleasure" checked onchange="updateActivityPreviews()">
+                                <span>Pleasure</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="purpose" value="business" onchange="updateActivityPreviews()">
+                                <span>Business</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="wizard-footer center">
-                <button type="button" class="nav-btn back-btn" onclick="goToStep(2)">← Edit Details</button>
-            </div>
-        </section>
+                <!-- Dynamic Big Sur Experience Info Cards -->
+                <div class="tier-previews">
+                    <div class="preview-item mac-card clickable-option" id="preview-low">
+                        <h4>Economy</h4>
+                        <div class="preview-content"></div>
+                    </div>
+                    <div class="preview-item mac-card clickable-option" id="preview-mid">
+                        <h4>Effortless</h4>
+                        <div class="preview-content"></div>
+                    </div>
+                    <div class="preview-item mac-card clickable-option" id="preview-exclusive">
+                        <h4>Exclusive</h4>
+                        <div class="preview-content"></div>
+                    </div>
+                </div>
+
+                <div class="wizard-footer split">
+                    <button type="button" class="mac-btn secondary-btn" onclick="goToStep(1)">← Back</button>
+                    <button type="button" class="mac-btn primary-btn" onclick="generateAndShowResults()">Generate Budget Plan →</button>
+                </div>
+            </section>
+
+            <!-- STEP 3: RESULTS MATRIX -->
+            <section class="wizard-step" id="step-3">
+                <h2>Your Generated Estimates</h2>
+                <div class="results-section">
+                    <div class="budget-card mac-card clickable-option">
+                        <h3>Economy</h3>
+                        <p class="subtitle">Budget accommodations, basic mapping, authentic local experiences.</p>
+                        <div class="price" id="budget-low">$0</div>
+                        <div class="affiliate-links">
+                            <a href="#" target="_blank" class="affiliate-btn flight-btn">Cheap Flights</a>
+                            <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book Hostels</a>
+                        </div>
+                    </div>
+                    
+                    <div class="budget-card mac-card clickable-option active">
+                        <h3>Effortless</h3>
+                        <p class="subtitle">Comfortable intermediate options, balanced standard amenities.</p>
+                        <div class="price" id="budget-mid">$0</div>
+                        <div class="affiliate-links">
+                            <a href="#" target="_blank" class="affiliate-btn flight-btn">Standard Flights</a>
+                            <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book 3-Star</a>
+                        </div>
+                    </div>
+
+                    <div class="budget-card mac-card clickable-option">
+                        <h3>Exclusive</h3>
+                        <p class="subtitle">Premium transit classes, luxury VIP stays, maximum culinary quality.</p>
+                        <div class="price" id="budget-exclusive">$0</div>
+                        <div class="affiliate-links">
+                            <a href="#" target="_blank" class="affiliate-btn flight-btn">Business Class</a>
+                            <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book Luxury</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wizard-footer center">
+                    <button type="button" class="mac-btn secondary-btn" onclick="goToStep(2)">← Edit Details</button>
+                </div>
+            </section>
+        </div>
     </main>
     <script src="app.js"></script>
 </body>
