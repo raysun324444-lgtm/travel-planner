@@ -1,4 +1,4 @@
-// Fixed Country Configuration Mapping Data Matched with Dropdown Keys
+// Native Country Matrix Parameter Config Mapping Keys
 const countryData = {
     "US": { flag: "🇺🇸", region: "NA", costTier: 3 },
     "UK": { flag: "🇬🇧", region: "EU", costTier: 3 },
@@ -11,7 +11,7 @@ const countryData = {
     "PT": { flag: "🇵🇹", region: "EU", costTier: 2 }
 };
 
-// Activity Matrix dynamically rendering text changes depending on selected parameters
+// Activities Matrix configuration managing text updates on purpose changes
 const activitiesMatrix = {
     pleasure: {
         low: "🏨 Hostels & Shared Spaces<br>🍲 Local Street Food Stalls<br>🚌 Public Buses & Trains",
@@ -41,7 +41,7 @@ function goToStep(stepNumber) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Fixed Flag Lookup Implementation
+// Fixed Dynamic Flags Lookup Implementation
 function updateFlags() {
     const originVal = document.getElementById('origin').value;
     const destVal = document.getElementById('destination').value;
@@ -49,11 +49,10 @@ function updateFlags() {
     document.getElementById('flag-origin').innerText = countryData[originVal]?.flag || "🏳️";
     document.getElementById('flag-destination').innerText = countryData[destVal]?.flag || "🏳️";
     
-    // Automatically recalculate data states if on final view page
     calculateBudget();
 }
 
-// Activity Preview Updates dynamically matching user parameters
+// Activity Previews Switch Controller
 function updateActivityPreviews() {
     const purposeElement = document.querySelector('input[name="purpose"]:checked');
     const currentPurpose = purposeElement ? purposeElement.value : 'pleasure';
@@ -77,6 +76,7 @@ function generateAndShowResults() {
     goToStep(3);
 }
 
+// Robust Calculation Engine Resolving the Cross-Continent Route Errors
 function calculateBudget() {
     const origin = document.getElementById('origin').value;
     const destination = document.getElementById('destination').value;
@@ -89,34 +89,35 @@ function calculateBudget() {
     const timeDiff = returnDate.getTime() - departDate.getTime();
     const days = Math.max(1, Math.ceil(timeDiff / (1000 * 3600 * 24)));
 
+    // Safely fallback structure ensuring cross-country routing matrices do not crash
     const origData = countryData[origin] || { region: "UNKNOWN", costTier: 2 };
     const destData = countryData[destination] || { region: "UNKNOWN", costTier: 2 };
     
     let flightBaseCost = 200;
     if (origData.region !== destData.region) {
-        flightBaseCost = 950;
+        flightBaseCost = 980; // Standard cross-continent international baseline
     }
 
-    const baseDailyRate = 45 * destData.costTier; 
+    const baseDailyRate = 48 * destData.costTier; 
     const totalPeopleMultiplier = counts.adults + (counts.children * 0.6);
     const businessMultiplier = (purpose === 'business') ? 1.45 : 1.0;
 
-    const lowTotal = (flightBaseCost * 0.75 * totalPeopleMultiplier) + (baseDailyRate * 0.65 * days * totalPeopleMultiplier);
-    const midTotal = ((flightBaseCost * 1.0 * totalPeopleMultiplier) + (baseDailyRate * 1.25 * days * totalPeopleMultiplier)) * businessMultiplier;
-    const highTotal = ((flightBaseCost * 2.6 * totalPeopleMultiplier) + (baseDailyRate * 3.8 * days * totalPeopleMultiplier)) * businessMultiplier * 1.35;
+    const lowTotal = (flightBaseCost * 0.72 * totalPeopleMultiplier) + (baseDailyRate * 0.62 * days * totalPeopleMultiplier);
+    const midTotal = ((flightBaseCost * 1.0 * totalPeopleMultiplier) + (baseDailyRate * 1.22 * days * totalPeopleMultiplier)) * businessMultiplier;
+    const highTotal = ((flightBaseCost * 2.5 * totalPeopleMultiplier) + (baseDailyRate * 3.7 * days * totalPeopleMultiplier)) * businessMultiplier * 1.35;
 
     document.getElementById('budget-low').innerText = `$${Math.round(lowTotal).toLocaleString()}`;
     document.getElementById('budget-mid').innerText = `$${Math.round(midTotal).toLocaleString()}`;
     document.getElementById('budget-exclusive').innerText = `$${Math.round(highTotal).toLocaleString()}`;
 }
 
-// Attach Event Watchers
+// Watchers
 document.getElementById('origin').addEventListener('change', updateFlags);
 document.getElementById('destination').addEventListener('change', updateFlags);
 document.getElementById('depart-date').addEventListener('change', calculateBudget);
 document.getElementById('return-date').addEventListener('change', calculateBudget);
 
-// Run initial configurations
+// Initialize application values on window load
 window.onload = () => {
     updateFlags();
     updateActivityPreviews();
