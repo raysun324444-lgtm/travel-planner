@@ -1,11 +1,7 @@
 :root {
-    /* macOS Light Theme Wallpapers Base Colors */
-    --bg-gradient: linear-gradient(135deg, #eaeffb 0%, #f4f5f9 50%, #e2eaf7 100%);
     --text-primary: #1d1d1f;
     --text-secondary: #86868b;
     --accent-blue: #0071e3;
-    
-    /* SF Glassmorphism Spec */
     --glass-bg: rgba(255, 255, 255, 0.45);
     --glass-bg-hover: rgba(255, 255, 255, 0.65);
     --glass-border: rgba(255, 255, 255, 0.4);
@@ -13,276 +9,89 @@
     --inner-glow: inset 0 1px 1px rgba(255, 255, 255, 0.4);
 }
 
+/* Dynamic Step Background Engine */
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    background: var(--bg-gradient);
-    background-attachment: fixed;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
     color: var(--text-primary);
     display: flex;
     justify-content: center;
     padding: 40px 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    transition: background 0.8s cubic-bezier(0.25, 1, 0.5, 1);
     -webkit-font-smoothing: antialiased;
 }
 
-.app-container {
-    max-width: 840px;
-    width: 100%;
-}
+body.bg-step-1 { background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%); background-attachment: fixed; }
+body.bg-step-2 { background: linear-gradient(135deg, #e6e9f0 0%, #eef1f5 100%); background-attachment: fixed; }
+body.bg-step-3 { background: linear-gradient(135deg, #eaeffb 0%, #f4f5f9 50%, #e2eaf7 100%); background-attachment: fixed; }
 
-.app-header {
-    text-align: center;
-    margin-bottom: 35px;
-}
+.app-container { max-width: 840px; width: 100%; }
+.app-header { text-align: center; margin-bottom: 35px; }
+.app-header h1 { font-size: 2.25rem; font-weight: 700; margin: 0 0 15px 0; letter-spacing: -0.03em; }
 
-.app-header h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    letter-spacing: -0.03em;
-    color: var(--text-primary);
-}
+/* Progress Flow Header */
+.progress-bar { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
+.step-indicator { width: 28px; height: 28px; border-radius: 50%; background: rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); transition: all 0.3s; }
+.step-indicator.active { background: var(--text-primary); color: #fff; }
+.step-line { width: 40px; height: 2px; background: rgba(0,0,0,0.1); }
 
-.app-header p {
-    color: var(--text-secondary);
-    font-size: 1rem;
-    margin: 0;
-}
+/* Wizard Flow Mechanics */
+.wizard-step { display: none; opacity: 0; transform: translateY(15px); transition: all 0.4s ease; }
+.wizard-step.active { display: block; opacity: 1; transform: translateY(0); }
+.glass-panel { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--inner-glow); border-radius: 18px; padding: 30px; }
+.wizard-step h2 { margin-top: 0; font-size: 1.5rem; font-weight: 600; margin-bottom: 25px; }
 
-/* Glassmorphic Container Structure */
-.form-section {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow), var(--inner-glow);
-    border-radius: 18px;
-    padding: 30px;
-    margin-bottom: 30px;
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-}
+/* Core Layouts & Inputs */
+.input-group { margin-bottom: 24px; }
+.row { display: flex; gap: 20px; }
+.col { flex: 1; }
+label { display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); margin-bottom: 8px; }
+select, input[type="date"] { width: 100%; padding: 12px 14px; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 10px; background: rgba(255, 255, 255, 0.7); font-size: 0.95rem; box-sizing: border-box; outline: none; transition: all 0.2s; }
+select:focus, input[type="date"]:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25); background: #fff; }
 
-.input-group {
-    margin-bottom: 24px;
-}
+/* Counter & Toggle Controls */
+.counter { display: flex; align-items: center; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 10px; width: fit-content; background: rgba(255, 255, 255, 0.7); overflow: hidden; }
+.counter button { background: transparent; border: none; padding: 10px 18px; font-size: 1.1rem; cursor: pointer; }
+.counter button:hover { background: rgba(0, 0, 0, 0.05); }
+.counter span { min-width: 40px; text-align: center; font-weight: 600; }
+.radio-toggle { display: flex; background: rgba(0, 0, 0, 0.05); padding: 3px; border-radius: 10px; width: fit-content; }
+.radio-label input { display: none; }
+.radio-label span { display: inline-block; padding: 8px 24px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 0.9rem; transition: all 0.2s; }
+.radio-label input:checked + span { background: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
 
-.input-group:last-child {
-    margin-bottom: 0;
-}
+/* Step 2 Category Feature Previews */
+.tier-previews { display: flex; gap: 15px; margin-top: 30px; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 25px; }
+.preview-item { flex: 1; background: rgba(255,255,255,0.3); border-radius: 12px; padding: 16px; border: 1px solid rgba(255,255,255,0.2); }
+.preview-item h4 { margin: 0 0 8px 0; font-weight: 600; font-size: 1rem; }
+.preview-item p { margin: 0; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
 
-.row {
-    display: flex;
-    gap: 20px;
-}
+/* Navigation Buttons UI */
+.wizard-footer { display: flex; justify-content: flex-end; margin-top: 25px; }
+.wizard-footer.split { justify-content: space-between; }
+.wizard-footer.center { justify-content: center; }
+.nav-btn { padding: 12px 24px; border-radius: 10px; border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.next-btn { background: var(--text-primary); color: #fff; }
+.next-btn:hover { background: #333; transform: translateY(-1px); }
+.back-btn { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+.back-btn:hover { background: rgba(0,0,0,0.1); }
 
-.col {
-    flex: 1;
-}
+/* Step 3: Card Layout Grid */
+.results-section { display: flex; gap: 20px; }
+.budget-card { flex: 1; background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--inner-glow); border-radius: 18px; padding: 24px; text-align: center; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+.budget-card:hover { background: var(--glass-bg-hover); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(31, 38, 135, 0.12); }
+.budget-card h3 { margin: 0 0 6px 0; font-size: 1.3rem; }
+.budget-card .subtitle { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px; min-height: 48px; line-height: 1.4; }
+.budget-card .price { font-size: 2rem; font-weight: 700; margin-bottom: 20px; }
+.affiliate-links { display: flex; flex-direction: column; gap: 8px; }
+.affiliate-btn { display: block; padding: 10px 14px; font-size: 0.85rem; font-weight: 600; text-decoration: none; border-radius: 8px; transition: all 0.2s; }
+.flight-btn { background-color: rgba(0, 113, 227, 0.1); color: var(--accent-blue); }
+.flight-btn:hover { background-color: var(--accent-blue); color: #fff; }
+.hotel-btn { background-color: rgba(52, 199, 89, 0.1); color: #248a3d; }
+.hotel-btn:hover { background-color: #34c759; color: #fff; }
 
-label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-}
-
-/* Clean macOS Dropdowns and Inputs */
-select, input[type="date"] {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.7);
-    font-size: 0.95rem;
-    color: var(--text-primary);
-    box-sizing: border-box;
-    outline: none;
-    transition: all 0.2s ease;
-}
-
-select:focus, input[type="date"]:focus {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25);
-    background: #ffffff;
-}
-
-/* Counter Controls */
-.counter {
-    display: flex;
-    align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    width: fit-content;
-    background: rgba(255, 255, 255, 0.7);
-    overflow: hidden;
-}
-
-.counter button {
-    background: transparent;
-    border: none;
-    padding: 10px 18px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    color: var(--text-primary);
-    transition: background 0.2s;
-}
-
-.counter button:hover {
-    background: rgba(0, 0, 0, 0.05);
-}
-
-.counter span {
-    min-width: 40px;
-    text-align: center;
-    font-weight: 600;
-}
-
-/* Purpose Segmented Toggle Switch */
-.radio-toggle {
-    display: flex;
-    background: rgba(0, 0, 0, 0.05);
-    padding: 3px;
-    border-radius: 10px;
-    width: fit-content;
-}
-
-.radio-label input {
-    display: none;
-}
-
-.radio-label span {
-    display: inline-block;
-    padding: 8px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.radio-label input:checked + span {
-    background: #ffffff;
-    color: var(--text-primary);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-/* Responsive Grid Configuration */
-.results-section {
-    display: flex;
-    gap: 20px;
-}
-
-/* Responsive Glass Budget Cards */
-.budget-card {
-    flex: 1;
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow), var(--inner-glow);
-    border-radius: 18px;
-    padding: 24px;
-    text-align: center;
-    /* Spring responsive scaling animation on load/interaction */
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    transform: translateY(0);
-}
-
-.budget-card:hover {
-    background: var(--glass-bg-hover);
-    transform: translateY(-6px);
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.12), var(--inner-glow);
-    border-color: rgba(255, 255, 255, 0.6);
-}
-
-.budget-card h3 {
-    margin-top: 0;
-    margin-bottom: 6px;
-    font-size: 1.3rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-}
-
-.budget-card .subtitle {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 24px;
-    min-height: 34px;
-    line-height: 1.4;
-}
-
-.budget-card .price {
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    color: var(--text-primary);
-    margin-bottom: 20px;
-}
-
-/* Monetized Booking Buttons Layout */
-.affiliate-links {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.affiliate-btn {
-    display: block;
-    padding: 10px 14px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* Native Premium Styling Presets */
-.flight-btn {
-    background-color: rgba(0, 113, 227, 0.1);
-    color: var(--accent-blue);
-}
-
-.flight-btn:hover {
-    background-color: var(--accent-blue);
-    color: #ffffff;
-    transform: scale(1.02);
-}
-
-.hotel-btn {
-    background-color: rgba(52, 199, 89, 0.1);
-    color: #248a3d;
-}
-
-.hotel-btn:hover {
-    background-color: #34c759;
-    color: #ffffff;
-    transform: scale(1.02);
-}
-
-/* Mobile & Tablet Responsiveness Overrides */
 @media (max-width: 768px) {
-    body {
-        padding: 20px 12px;
-    }
-    
-    .row {
-        flex-direction: column;
-        gap: 16px;
-    }
-    
-    .results-section {
-        flex-direction: column;
-        gap: 16px;
-    }
-    
-    .budget-card {
-        padding: 20px;
-    }
-    
-    .budget-card:hover {
-        transform: translateY(-2px); /* Tamer transition for mobile viewports */
-    }
+    .row, .results-section, .tier-previews { flex-direction: column; gap: 16px; }
+    .budget-card:hover { transform: translateY(-2px); }
 }
