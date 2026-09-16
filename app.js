@@ -1,4 +1,4 @@
-// Native Country Matrix Parameter Config Mapping Keys
+// Complete Multi-Region Matrix Data Map
 const countryData = {
     "US": { flag: "🇺🇸", region: "NA", costTier: 3 },
     "UK": { flag: "🇬🇧", region: "EU", costTier: 3 },
@@ -11,7 +11,7 @@ const countryData = {
     "PT": { flag: "🇵🇹", region: "EU", costTier: 2 }
 };
 
-// Activities Matrix configuration managing text updates on purpose changes
+// Activities Breakdown Map Matrix (Dynamic Descriptions)
 const activitiesMatrix = {
     pleasure: {
         low: "🏨 Hostels & Shared Spaces<br>🍲 Local Street Food Stalls<br>🚌 Public Buses & Trains",
@@ -37,11 +37,12 @@ function goToStep(stepNumber) {
         document.getElementById(`dot-${i}`).classList.add('active');
     }
 
+    // Force background tracking updates to override fallback configurations
     document.body.className = `bg-step-${stepNumber}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Fixed Dynamic Flags Lookup Implementation
+// Fixed Dropdown Flag Update Trigger
 function updateFlags() {
     const originVal = document.getElementById('origin').value;
     const destVal = document.getElementById('destination').value;
@@ -52,7 +53,7 @@ function updateFlags() {
     calculateBudget();
 }
 
-// Activity Previews Switch Controller
+// Activity Switch Controller
 function updateActivityPreviews() {
     const purposeElement = document.querySelector('input[name="purpose"]:checked');
     const currentPurpose = purposeElement ? purposeElement.value : 'pleasure';
@@ -76,7 +77,7 @@ function generateAndShowResults() {
     goToStep(3);
 }
 
-// Robust Calculation Engine Resolving the Cross-Continent Route Errors
+// Fixed Calculation Engine Core Routing
 function calculateBudget() {
     const origin = document.getElementById('origin').value;
     const destination = document.getElementById('destination').value;
@@ -89,13 +90,13 @@ function calculateBudget() {
     const timeDiff = returnDate.getTime() - departDate.getTime();
     const days = Math.max(1, Math.ceil(timeDiff / (1000 * 3600 * 24)));
 
-    // Safely fallback structure ensuring cross-country routing matrices do not crash
+    // Destructure country records safely to prevent route crashes
     const origData = countryData[origin] || { region: "UNKNOWN", costTier: 2 };
     const destData = countryData[destination] || { region: "UNKNOWN", costTier: 2 };
     
-    let flightBaseCost = 200;
+    let flightBaseCost = 220;
     if (origData.region !== destData.region) {
-        flightBaseCost = 980; // Standard cross-continent international baseline
+        flightBaseCost = 980; // High-fidelity international cross-region rate
     }
 
     const baseDailyRate = 48 * destData.costTier; 
@@ -111,13 +112,13 @@ function calculateBudget() {
     document.getElementById('budget-exclusive').innerText = `$${Math.round(highTotal).toLocaleString()}`;
 }
 
-// Watchers
+// Initialize Watchers
 document.getElementById('origin').addEventListener('change', updateFlags);
 document.getElementById('destination').addEventListener('change', updateFlags);
 document.getElementById('depart-date').addEventListener('change', calculateBudget);
 document.getElementById('return-date').addEventListener('change', calculateBudget);
 
-// Initialize application values on window load
+// Run initialization routine on document load
 window.onload = () => {
     updateFlags();
     updateActivityPreviews();
