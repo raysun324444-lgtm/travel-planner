@@ -32,7 +32,7 @@ body.bg-step-1 { background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%) f
 body.bg-step-2 { background: linear-gradient(135deg, #e6e9f0 0%, #eef1f5 100%) fixed !important; }
 body.bg-step-3 { background: linear-gradient(135deg, #eaeffb 0%, #f4f5f9 50%, #e2eaf7 100%) fixed !important; }
 
-/* macOS Big Sur Acrylic Window Container */
+/* App Window Setup */
 .app-window {
     background: var(--bigsur-bg);
     backdrop-filter: blur(40px) saturate(220%);
@@ -81,7 +81,7 @@ body.bg-step-3 { background: linear-gradient(135deg, #eaeffb 0%, #f4f5f9 50%, #e
     letter-spacing: -0.02em;
 }
 
-/* Redesigned Dynamic Traffic Light Steps Container */
+/* Traffic Light Flow System Control Panel Indicators */
 .traffic-lights-steps {
     display: flex;
     gap: 8px;
@@ -98,16 +98,14 @@ body.bg-step-3 { background: linear-gradient(135deg, #eaeffb 0%, #f4f5f9 50%, #e
     cursor: pointer;
     position: relative;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    opacity: 0.25; /* Dim color default */
+    opacity: 0.25;
     transform: scale(0.9);
 }
 
-/* Precise Smooth Color Tuning Mapping */
 .light-step.close { background: #ff5f56; border: 0.5px solid #e0443e; }
 .light-step.minimize { background: #ffbd2e; border: 0.5px solid #dea123; }
 .light-step.maximize { background: #27c93f; border: 0.5px solid #1aab29; }
 
-/* Active States with Motion Scale and Shadow Glow Responses */
 .light-step.active {
     opacity: 1 !important;
     transform: scale(1.15);
@@ -116,7 +114,28 @@ body.bg-step-3 { background: linear-gradient(135deg, #eaeffb 0%, #f4f5f9 50%, #e
 
 .window-content { padding: 35px; }
 
-/* Big Sur Option Forms Styling */
+/* Structural Form Step Containers - FIXED OVERLAPPING CULPRIT ELEMENT */
+.wizard-step { 
+    display: none !important; 
+    opacity: 0; 
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.wizard-step.active { 
+    display: block !important; 
+    opacity: 1; 
+    visibility: visible;
+    pointer-events: auto; 
+    animation: windowSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); 
+}
+
+@keyframes windowSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Big Sur Card Design Matrix styling */
 .mac-card {
     background: var(--bigsur-card);
     border: 1px solid var(--bigsur-border);
@@ -127,11 +146,8 @@ body.bg-step-3 { background: linear-gradient(135deg, #eaeffb 0%, #f4f5f9 50%, #e
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.clickable-option {
-    cursor: pointer;
-}
+.clickable-option { cursor: pointer; }
 
-/* Universal Page Hover State Modifiers */
 .clickable-option:hover {
     background: var(--bigsur-card-hover) !important;
     transform: scale(1.025) translateY(-3px);
@@ -142,25 +158,6 @@ body.bg-step-3 { background: linear-gradient(135deg, #eaeffb 0%, #f4f5f9 50%, #e
 .clickable-option:focus-within {
     border-color: var(--accent-blue) !important;
     box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.18);
-/* FIXED WIZARD FLOW MECHANICS */
-.wizard-step { 
-    display: none; 
-    opacity: 0; 
-    visibility: hidden;
-    pointer-events: none; /* Completely disables interaction when hidden */
-}
-
-.wizard-step.active { 
-    display: block; 
-    opacity: 1; 
-    visibility: visible;
-    pointer-events: auto; /* Re-enables perfect button clicking when active */
-    animation: windowSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); 
-}
-
-@keyframes windowSlideIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .wizard-step h2 { margin-top: 0; font-size: 1.55rem; font-weight: 700; margin-bottom: 25px; letter-spacing: -0.02em; }
@@ -178,12 +175,8 @@ label {
     margin-bottom: 8px;
 }
 
-/* macOS Big Sur Dropdowns Custom Architecture Styling */
-.dropdown-wrapper {
-    position: relative;
-}
-
-/* Injected custom right double arrow indicators for native feel */
+/* macOS Dropdowns Settings */
+.dropdown-wrapper { position: relative; }
 .dropdown-wrapper::after {
     content: "↕";
     font-size: 0.8rem;
@@ -209,7 +202,6 @@ select {
     -webkit-appearance: none;
 }
 
-/* Premium System white clean dropdown layers container list mapping override */
 select option {
     background-color: #ffffff;
     color: var(--text-primary);
@@ -217,7 +209,7 @@ select option {
     padding: 10px;
 }
 
-/* macOS Native Design Calendar Overrides */
+/* macOS Calendar Settings */
 .macos-calendar-wrapper input[type="date"] {
     border: none;
     background: rgba(0, 0, 0, 0.04);
@@ -233,21 +225,16 @@ select option {
     box-sizing: border-box;
     transition: all 0.2s ease;
 }
-
 .macos-calendar-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
     background: rgba(0, 0, 0, 0.05);
     padding: 4px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background 0.2s;
 }
 
-.macos-calendar-wrapper input[type="date"]::-webkit-calendar-picker-indicator:hover {
-    background: rgba(0, 113, 227, 0.15);
-}
-
+/* Form Controls Layout Setup */
 .counter { display: flex; align-items: center; background: rgba(0, 0, 0, 0.04); border-radius: 8px; width: fit-content; overflow: hidden; }
-.counter button { background: transparent; border: none; padding: 10px 18px; font-size: 1.1rem; cursor: pointer; color: var(--text-primary); transition: background 0.2s; }
+.counter button { background: transparent; border: none; padding: 10px 18px; font-size: 1.1rem; cursor: pointer; color: var(--text-primary); }
 .counter button:hover { background: rgba(0, 0, 0, 0.08); }
 .counter span { min-width: 40px; text-align: center; font-weight: 600; font-size: 1.05rem; }
 
@@ -260,6 +247,7 @@ select option {
 .preview-item h4 { margin: 0 0 10px 0; font-weight: 700; font-size: 1.05rem; }
 .preview-item .preview-content { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
 
+/* System CTAs UI Action Buttons Engine */
 .mac-btn { padding: 11px 24px; border-radius: 8px; border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
 .primary-btn { background: var(--accent-blue); color: #ffffff; }
 .primary-btn:hover { background: var(--accent-blue-hover); transform: translateY(-1px); }
@@ -270,6 +258,7 @@ select option {
 .wizard-footer.split { justify-content: space-between; }
 .wizard-footer.center { justify-content: center; }
 
+/* Results Grid Display */
 .results-section { display: flex; gap: 20px; }
 .budget-card { flex: 1; text-align: center; }
 .budget-card h3 { margin: 0 0 6px 0; font-size: 1.25rem; font-weight: 700; }
