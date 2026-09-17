@@ -1,13 +1,13 @@
 const countryData = {
-    "US": { flag: "🇺🇸", region: "NA", costTier: 3 },
-    "UK": { flag: "🇬🇧", region: "EU", costTier: 3 },
-    "FR": { flag: "🇫🇷", region: "EU", costTier: 3 },
-    "JP": { flag: "🇯🇵", region: "AS", costTier: 2.5 },
-    "TH": { flag: "🇹🇭", region: "AS", costTier: 1 },
-    "KH": { flag: "🇰🇭", region: "AS", costTier: 1 },
-    "AE": { flag: "🇦🇪", region: "ME", costTier: 3 },
-    "MX": { flag: "🇲🇽", region: "NA", costTier: 1.5 },
-    "PT": { flag: "🇵🇹", region: "EU", costTier: 2 }
+    "US": { region: "NA", costTier: 3 },
+    "UK": { region: "EU", costTier: 3 },
+    "FR": { region: "EU", costTier: 3 },
+    "JP": { region: "AS", costTier: 2.5 },
+    "TH": { region: "AS", costTier: 1 },
+    "KH": { region: "AS", costTier: 1 },
+    "AE": { region: "ME", costTier: 3 },
+    "MX": { region: "NA", costTier: 1.5 },
+    "PT": { region: "EU", costTier: 2 }
 };
 
 const activitiesMatrix = {
@@ -26,7 +26,7 @@ const activitiesMatrix = {
 let counts = { adults: 1, children: 0 };
 
 function goToStep(stepNumber) {
-    // Hide all steps securely
+    // Hide all steps cleanly
     document.querySelectorAll('.wizard-step').forEach(step => {
         step.classList.remove('active');
     });
@@ -34,7 +34,7 @@ function goToStep(stepNumber) {
         dot.classList.remove('active');
     });
     
-    // Mount new step views active
+    // Mount the requested page view active
     const targetStep = document.getElementById(`step-${stepNumber}`);
     const targetDot = document.getElementById(`traffic-dot-${stepNumber}`);
     
@@ -43,19 +43,6 @@ function goToStep(stepNumber) {
 
     document.body.className = `bg-step-${stepNumber}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function updateFlags() {
-    const originVal = document.getElementById('origin').value;
-    const destVal = document.getElementById('destination').value;
-
-    const flagOrigin = document.getElementById('flag-origin');
-    const flagDest = document.getElementById('flag-destination');
-
-    if (flagOrigin) flagOrigin.innerText = countryData[originVal]?.flag || "🏳️";
-    if (flagDest) flagDest.innerText = countryData[destVal]?.flag || "🏳️";
-    
-    calculateBudget();
 }
 
 function updateActivityPreviews() {
@@ -132,17 +119,13 @@ function calculateBudget() {
     if (bExc) bExc.innerText = `$${Math.round(highTotal).toLocaleString()}`;
 }
 
-// Stably mount handlers when DOM loads
+// Bind automatic calculation on option select changes
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById('origin').addEventListener('change', updateFlags);
-    document.getElementById('destination').addEventListener('change', updateFlags);
+    document.getElementById('origin').addEventListener('change', calculateBudget);
+    document.getElementById('destination').addEventListener('change', calculateBudget);
     document.getElementById('depart-date').addEventListener('change', calculateBudget);
     document.getElementById('return-date').addEventListener('change', calculateBudget);
-    
-    document.getElementById('btn-continue-1').addEventListener('click', () => goToStep(2));
-    document.getElementById('btn-generate').addEventListener('click', generateAndShowResults);
 
-    updateFlags();
     updateActivityPreviews();
-    goToStep(1); // Standard bootstrap default step
+    goToStep(1); // Boot app directly into Step 1 cleanly
 });
