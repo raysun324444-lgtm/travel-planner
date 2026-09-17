@@ -8,10 +8,9 @@
 </head>
 <body>
     <main class="app-container app-window">
-        <!-- macOS Style Header Rebranded with your Custom SVG Logo & Right Traffic Lights -->
+        <!-- macOS Style Header with Combined Dynamic Traffic Light Steps -->
         <header class="window-header">
             <div class="header-left-brand">
-                <!-- Injected Custom Nomad Traveler SVG Logo -->
                 <div class="nomad-logo-icon">
                     <svg viewBox="0 0 512 512">
                       <rect x="32" y="32" width="448" height="448" rx="100" ry="100" fill="#1e252b" stroke="#333c44" stroke-width="8"/>
@@ -32,22 +31,11 @@
                 <h1 class="window-title">Nomad</h1>
             </div>
             
-            <div class="header-right-group">
-                <!-- Navigation Steps -->
-                <div class="progress-bar">
-                    <span class="step-indicator active" id="dot-1" onclick="goToStep(1)">1</span>
-                    <span class="step-line"></span>
-                    <span class="step-indicator" id="dot-2" onclick="goToStep(2)">2</span>
-                    <span class="step-line"></span>
-                    <span class="step-indicator" id="dot-3">3</span>
-                </div>
-                
-                <!-- Traffic Lights Migrated to Right Side with Backing Indicator Numbers (1, 2, 3) -->
-                <div class="traffic-lights">
-                    <span class="light close" data-number="1"></span>
-                    <span class="light minimize" data-number="2"></span>
-                    <span class="light maximize" data-number="3"></span>
-                </div>
+            <!-- Traffic Lights Transformed into Motion Page Indicators on Upper-Right Side -->
+            <div class="traffic-lights-steps">
+                <span class="light-step close" id="traffic-dot-1" onclick="goToStep(1)"></span>
+                <span class="light-step minimize" id="traffic-dot-2" onclick="goToStep(2)"></span>
+                <span class="light-step maximize" id="traffic-dot-3" onclick="goToStep(3)"></span>
             </div>
         </header>
 
@@ -98,7 +86,7 @@
                 </div>
 
                 <div class="wizard-footer">
-                    <button type="button" class="mac-btn primary-btn" onclick="goToStep(2)">Continue to Customization →</button>
+                    <button type="button" id="btn-continue-1" class="mac-btn primary-btn">Continue to Customization →</button>
                 </div>
             </section>
 
@@ -141,7 +129,7 @@
                     </div>
                 </div>
 
-                <!-- Step 2 Cards with Uniform Hover/Scale Behaviors -->
+                <!-- Step 2 Cards -->
                 <div class="tier-previews">
                     <div class="preview-item mac-card clickable-option" id="preview-low">
                         <h4>Economy</h4>
@@ -159,7 +147,7 @@
 
                 <div class="wizard-footer split">
                     <button type="button" class="mac-btn secondary-btn" onclick="goToStep(1)">← Back</button>
-                    <button type="button" class="mac-btn primary-btn" onclick="generateAndShowResults()">Generate Budget Plan →</button>
+                    <button type="button" id="btn-generate" class="mac-btn primary-btn">Generate Budget Plan →</button>
                 </div>
             </section>
 
@@ -177,3 +165,13 @@
                         </div>
                     </div>
                     
+                    <div class="budget-card mac-card clickable-option active">
+                        <h3>Effortless</h3>
+                        <p class="subtitle">Comfortable intermediate options, balanced standard amenities.</p>
+                        <div class="price" id="budget-mid">$0</div>
+                        <div class="affiliate-links">
+                            <a href="#" target="_blank" class="affiliate-btn flight-btn">Standard Flights</a>
+                            <a href="#" target="_blank" class="affiliate-btn hotel-btn">Book 3-Star</a>
+                        </div>
+                    </div>
+
