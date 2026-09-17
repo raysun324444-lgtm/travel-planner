@@ -8,7 +8,7 @@
 </head>
 <body>
     <main class="app-container app-window">
-        <!-- macOS Style Header with Combined Dynamic Traffic Light Steps -->
+        <!-- macOS Style Header -->
         <header class="window-header">
             <div class="header-left-brand">
                 <div class="nomad-logo-icon">
@@ -31,7 +31,7 @@
                 <h1 class="window-title">Nomad</h1>
             </div>
             
-            <!-- Traffic Lights Transformed into Motion Page Indicators on Upper-Right Side -->
+            <!-- Traffic Lights Motion Page Indicators -->
             <div class="traffic-lights-steps">
                 <span class="light-step close" id="traffic-dot-1" onclick="goToStep(1)"></span>
                 <span class="light-step minimize" id="traffic-dot-2" onclick="goToStep(2)"></span>
@@ -40,12 +40,12 @@
         </header>
 
         <div class="window-content">
-            <!-- STEP 1: DESTINATION & DATES -->
+            <!-- STEP 1: WHERE & WHEN -->
             <section class="wizard-step active" id="step-1">
                 <h2>Where & When?</h2>
                 <div class="input-row">
                     <div class="input-col mac-card clickable-option dropdown-wrapper">
-                        <label for="origin">From <span id="flag-origin">🇺🇸</span></label>
+                        <label for="origin">From</label>
                         <select id="origin">
                             <option value="US" selected>United States</option>
                             <option value="UK">United Kingdom</option>
@@ -59,7 +59,7 @@
                         </select>
                     </div>
                     <div class="input-col mac-card clickable-option dropdown-wrapper">
-                        <label for="destination">To <span id="flag-destination">🇹🇭</span></label>
+                        <label for="destination">To</label>
                         <select id="destination">
                             <option value="TH" selected>Thailand</option>
                             <option value="AE">United Arab Emirates</option>
@@ -90,10 +90,9 @@
                 </div>
             </section>
 
-            <!-- STEP 2: TRAVELERS & DYNAMIC EXPERIENCES -->
+            <!-- STEP 2: WHO & HOW -->
             <section class="wizard-step" id="step-2">
                 <h2>Who & How?</h2>
-                
                 <div class="input-row">
                     <div class="input-col mac-card clickable-option">
                         <label>Adults</label>
@@ -129,7 +128,7 @@
                     </div>
                 </div>
 
-                <!-- Step 2 Cards -->
+                <!-- Dynamic Previews Grid -->
                 <div class="tier-previews">
                     <div class="preview-item mac-card clickable-option" id="preview-low">
                         <h4>Economy</h4>
@@ -151,7 +150,7 @@
                 </div>
             </section>
 
-            <!-- STEP 3: RESULTS DISPLAY MATRIX -->
+            <!-- STEP 3: RESULTS -->
             <section class="wizard-step" id="step-3">
                 <h2>Your Generated Estimates</h2>
                 <div class="results-section">
@@ -175,3 +174,6 @@
                         </div>
                     </div>
 
+                    <div class="budget-card mac-card clickable-option">
+                        <h3>Exclusive</h3>
+                        <p class="subtitle">Premium transit classes, luxury VIP stays, maximum culinary quality.</p>
