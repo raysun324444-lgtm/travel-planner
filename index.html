@@ -31,7 +31,7 @@
                 <h1 class="window-title">Nomad</h1>
             </div>
             
-            <!-- Traffic Lights Motion Page Indicators -->
+            <!-- Traffic Lights Page Indicators -->
             <div class="traffic-lights-steps">
                 <span class="light-step close" id="traffic-dot-1" onclick="goToStep(1)"></span>
                 <span class="light-step minimize" id="traffic-dot-2" onclick="goToStep(2)"></span>
@@ -86,10 +86,8 @@
                 </div>
 
                 <div class="wizard-footer">
-                    <!-- ADDED DIRECT ONCLICK FUNCTION ENTRY HERE -->
-                    <button type="button" id="btn-continue-1" class="mac-btn primary-btn" onclick="goToStep(2)">Continue to Customization →</button>
+                    <button type="button" class="mac-btn primary-btn" onclick="goToStep(2)">Continue to Customization →</button>
                 </div>
-
             </section>
 
             <!-- STEP 2: WHO & HOW -->
@@ -130,7 +128,6 @@
                     </div>
                 </div>
 
-                <!-- Dynamic Previews Grid -->
                 <div class="tier-previews">
                     <div class="preview-item mac-card clickable-option" id="preview-low">
                         <h4>Economy</h4>
@@ -148,8 +145,7 @@
 
                 <div class="wizard-footer split">
                     <button type="button" class="mac-btn secondary-btn" onclick="goToStep(1)">← Back</button>
-                    <!-- ADDED DIRECT ONCLICK FUNCTION ENTRY HERE -->
-                    <button type="button" id="btn-generate" class="mac-btn primary-btn">Generate Budget Plan →</button>
+                    <button type="button" class="mac-btn primary-btn" onclick="generateAndShowResults()">Generate Budget Plan →</button>
                 </div>
             </section>
 
