@@ -25,15 +25,21 @@ const activitiesMatrix = {
 
 let counts = { adults: 1, children: 0 };
 
-// Refactored Step Navigation to Manage Dynamic Traffic Light Highlight Focus States
 function goToStep(stepNumber) {
-    document.querySelectorAll('.wizard-step').forEach(step => step.classList.remove('active'));
-    document.querySelectorAll('.light-step').forEach(dot => dot.classList.remove('active'));
+    // Hide all steps securely
+    document.querySelectorAll('.wizard-step').forEach(step => {
+        step.classList.remove('active');
+    });
+    document.querySelectorAll('.light-step').forEach(dot => {
+        dot.classList.remove('active');
+    });
     
-    document.getElementById(`step-${stepNumber}`).classList.add('active');
+    // Mount new step views active
+    const targetStep = document.getElementById(`step-${stepNumber}`);
+    const targetDot = document.getElementById(`traffic-dot-${stepNumber}`);
     
-    // Animate the single traffic dot matching the specific step number
-    document.getElementById(`traffic-dot-${stepNumber}`).classList.add('active');
+    if (targetStep) targetStep.classList.add('active');
+    if (targetDot) targetDot.classList.add('active');
 
     document.body.className = `bg-step-${stepNumber}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -43,8 +49,11 @@ function updateFlags() {
     const originVal = document.getElementById('origin').value;
     const destVal = document.getElementById('destination').value;
 
-    document.getElementById('flag-origin').innerText = countryData[originVal]?.flag || "🏳️";
-    document.getElementById('flag-destination').innerText = countryData[destVal]?.flag || "🏳️";
+    const flagOrigin = document.getElementById('flag-origin');
+    const flagDest = document.getElementById('flag-destination');
+
+    if (flagOrigin) flagOrigin.innerText = countryData[originVal]?.flag || "🏳️";
+    if (flagDest) flagDest.innerText = countryData[destVal]?.flag || "🏳️";
     
     calculateBudget();
 }
@@ -53,9 +62,13 @@ function updateActivityPreviews() {
     const purposeElement = document.querySelector('input[name="purpose"]:checked');
     const currentPurpose = purposeElement ? purposeElement.value : 'pleasure';
     
-    document.querySelector('#preview-low .preview-content').innerHTML = activitiesMatrix[currentPurpose].low;
-    document.querySelector('#preview-mid .preview-content').innerHTML = activitiesMatrix[currentPurpose].mid;
-    document.querySelector('#preview-exclusive .preview-content').innerHTML = activitiesMatrix[currentPurpose].exclusive;
+    const pLow = document.querySelector('#preview-low .preview-content');
+    const pMid = document.querySelector('#preview-mid .preview-content');
+    const pExc = document.querySelector('#preview-exclusive .preview-content');
+
+    if (pLow) pLow.innerHTML = activitiesMatrix[currentPurpose].low;
+    if (pMid) pMid.innerHTML = activitiesMatrix[currentPurpose].mid;
+    if (pExc) pExc.innerHTML = activitiesMatrix[currentPurpose].exclusive;
     
     calculateBudget();
 }
@@ -63,7 +76,10 @@ function updateActivityPreviews() {
 function changeCount(type, amount) {
     counts[type] = Math.max(0, counts[type] + amount);
     if (type === 'adults' && counts.adults < 1) counts.adults = 1;
-    document.getElementById(`${type}-count`).innerText = counts[type];
+    
+    const countLabel = document.getElementById(`${type}-count`);
+    if (countLabel) countLabel.innerText = counts[type];
+    
     calculateBudget();
 }
 
@@ -73,10 +89,17 @@ function generateAndShowResults() {
 }
 
 function calculateBudget() {
-    const origin = document.getElementById('origin').value;
-    const destination = document.getElementById('destination').value;
-    const departDate = new Date(document.getElementById('depart-date').value);
-    const returnDate = new Date(document.getElementById('return-date').value);
+    const originEl = document.getElementById('origin');
+    const destEl = document.getElementById('destination');
+    const departEl = document.getElementById('depart-date');
+    const returnEl = document.getElementById('return-date');
+    
+    if (!originEl || !destEl || !departEl || !returnEl) return;
+
+    const origin = originEl.value;
+    const destination = destEl.value;
+    const departDate = new Date(departEl.value);
+    const returnDate = new Date(returnEl.value);
     
     const purposeElement = document.querySelector('input[name="purpose"]:checked');
     const purpose = purposeElement ? purposeElement.value : 'pleasure';
@@ -100,23 +123,26 @@ function calculateBudget() {
     const midTotal = ((flightBaseCost * 1.0 * totalPeopleMultiplier) + (baseDailyRate * 1.22 * days * totalPeopleMultiplier)) * businessMultiplier;
     const highTotal = ((flightBaseCost * 2.5 * totalPeopleMultiplier) + (baseDailyRate * 3.7 * days * totalPeopleMultiplier)) * businessMultiplier * 1.35;
 
-    document.getElementById('budget-low').innerText = `$${Math.round(lowTotal).toLocaleString()}`;
-    document.getElementById('budget-mid').innerText = `$${Math.round(midTotal).toLocaleString()}`;
-    document.getElementById('budget-exclusive').innerText = `$${Math.round(highTotal).toLocaleString()}`;
+    const bLow = document.getElementById('budget-low');
+    const bMid = document.getElementById('budget-mid');
+    const bExc = document.getElementById('budget-exclusive');
+
+    if (bLow) bLow.innerText = `$${Math.round(lowTotal).toLocaleString()}`;
+    if (bMid) bMid.innerText = `$${Math.round(midTotal).toLocaleString()}`;
+    if (bExc) bExc.innerText = `$${Math.round(highTotal).toLocaleString()}`;
 }
 
-// Fixed explicit element identification mappings to resolve button runtime errors
+// Stably mount handlers when DOM loads
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('origin').addEventListener('change', updateFlags);
     document.getElementById('destination').addEventListener('change', updateFlags);
     document.getElementById('depart-date').addEventListener('change', calculateBudget);
     document.getElementById('return-date').addEventListener('change', calculateBudget);
     
-    // Stably bind explicit ID elements
     document.getElementById('btn-continue-1').addEventListener('click', () => goToStep(2));
     document.getElementById('btn-generate').addEventListener('click', generateAndShowResults);
 
     updateFlags();
     updateActivityPreviews();
-    goToStep(1);
+    goToStep(1); // Standard bootstrap default step
 });
